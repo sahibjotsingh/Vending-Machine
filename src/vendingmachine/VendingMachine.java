@@ -1,6 +1,7 @@
 package vendingmachine;
 
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,31 +10,49 @@ import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 public class VendingMachine 
 {
-    JLabel vm, result, soda1, soda2, soda3;
+    JLabel vm, machineLeft;
     JTextArea transitionTable, message;
-    JButton selectSoda1, selectSoda2, selectSoda3, b1, b2, b3;
+    JTextField result;
+    JButton b1, b2, b3, sb1, sb2, sb3, sb4, sb5, sb6, sb7, sb8, sb9, sb10, sb11, sb12, sb13, sb14, sb15;
+    Color c;
     double startstate=0.00, amount=0.00, change=0.00, select=0.00;
     boolean freeze=false;
     
     JFrame frame = new JFrame("Vending Machine");
     JPanel panel = (JPanel) frame.getContentPane();
+    
     public VendingMachine()
     {
-        panel.setLayout(null);
-        frame.setSize(700, 730);
+        panel.setBackground(Color.decode("#FF1643"));
+        frame.setSize(665, 690);
+        frame.setResizable(false);
         setup();
+        setup1();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+    
+    public void setup1()
+    {
+        ImageIcon iconLogo = new ImageIcon("C:\\Users\\Hp-user\\Desktop\\kabir\\final.png");
+        machineLeft = new JLabel(iconLogo);
+        machineLeft.setVisible(true);
+        machineLeft.setBounds(0, 0, 20, 20);
+        machineLeft.setHorizontalAlignment(SwingConstants.LEFT);
+        machineLeft.setVerticalAlignment(SwingConstants.TOP);
+        panel.add(machineLeft);
     }
     
     public void setup()
@@ -88,97 +107,18 @@ public class VendingMachine
         finalstates.add(1.75);
         finalstates.add(2.00);
         
-        int x=20, y=43, y2=50;
+        int x=20, y=70, y2=20;
         
-        soda1 = new JLabel("SODA 1");
-        soda1.setHorizontalAlignment(SwingConstants.CENTER);
-        soda1.setBounds(47 + 8, 52, 70, 250);
-        soda1.setBackground(Color.white);
-        soda1.setOpaque(true);
-        panel.add(soda1);
-        
-        selectSoda1 = new JButton("Select");
-        selectSoda1.addActionListener(new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent e) 
-            {
-                if(select >= 1.25)
-                {
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                        message.setText("Change = " + Double.toString(amount - 1.25));
-                        result.setText("SODA 1");
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        }
-        ); 
-        selectSoda1.setFont(new Font("Tahoma", 0, 12));
-        panel.add(selectSoda1);
-        selectSoda1.setBounds(47 + 8, 320, 70, 20);
-        
-        soda2 = new JLabel("SODA 2");
-        soda2.setHorizontalAlignment(SwingConstants.CENTER);
-        soda2.setBounds(47 + 100 - 8, 52, 70, 250);
-        soda2.setBackground(Color.white);
-        soda2.setOpaque(true);
-        panel.add(soda2);
-        
-        selectSoda2 = new JButton("Select");
-        selectSoda2.addActionListener(new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent e) 
-            {
-                if(select >= 1.25)
-                {
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                        message.setText("Change = " + Double.toString(amount - 1.25));
-                        result.setText("SODA 2");
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        }
-        );
-        selectSoda2.setFont(new Font("Tahoma", 0, 12));
-        panel.add(selectSoda2);
-        selectSoda2.setBounds(47 + 100 - 8, 320, 70, 20);
-        
-        soda3 = new JLabel("SODA 3");
-        soda3.setHorizontalAlignment(SwingConstants.CENTER);
-        soda3.setBounds(47 + 190 -8, 52, 70, 250);
-        soda3.setBackground(Color.white);
-        soda3.setOpaque(true);
-        panel.add(soda3);
-        
-        selectSoda3 = new JButton("Select");
-        selectSoda3.addActionListener(new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent e) 
-            {
-                if(select >= 1.25)
-                {
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                        message.setText("Change = " + Double.toString(amount - 1.25));
-                        result.setText("SODA 3");
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        }
-        );
-        selectSoda3.setFont(new Font("Tahoma", 0, 12));
-        panel.add(selectSoda3);
-        selectSoda3.setBounds(47 + 190 -8, 320, 70, 20);
-        
+        message = new JTextArea();
+        message.setFont(new Font("Tahoma", 0, 42));
+        message.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        message.setForeground(Color.red);
+        message.setEditable(false);
+        message.setBounds(495, 10, 100, 60);
+        panel.add(message);
         
         b1 = new JButton("$0.25");
+        b1.setBackground(Color.lightGray);
         b1.addActionListener(new ActionListener() 
         {
             public void actionPerformed(ActionEvent e) 
@@ -190,7 +130,7 @@ public class VendingMachine
                     index2 = alphabets.indexOf(0.25);
                     startstate = Transition[index1][index2];
                     amount = amount + 0.25;
-                    message.setText("Money inserted=" + Double.toString(amount));
+                    message.setText(Double.toString(amount));
                     select = startstate;
                     if (finalstates.contains(startstate))
                     {
@@ -202,10 +142,10 @@ public class VendingMachine
         );
         b1.setFont(new Font("Tahoma", 0, 12));
         panel.add(b1);
-        b1.setBounds(47 + 330, 52, 70, 20 + y2);
-        
+        b1.setBounds(440, 10 + y + y2, 100, 30);
         
         b2 = new JButton("$1.00");
+        b2.setBackground(Color.lightGray);
         b2.addActionListener(new ActionListener() 
         {
             public void actionPerformed(ActionEvent e) 
@@ -217,7 +157,7 @@ public class VendingMachine
                     index2 = alphabets.indexOf(1.00);
                     startstate = Transition[index1][index2];
                     amount = amount + 1.00;
-                    message.setText("Money inseted=" + Double.toString(amount));
+                    message.setText(Double.toString(amount));
                     select = startstate;
                     if (finalstates.contains(startstate))
                     {
@@ -226,46 +166,397 @@ public class VendingMachine
                 }
                 else
                 {
-                    message.setText("Money inserted=" + Double.toString(amount));
+                    message.setText(Double.toString(amount));
                 }
             }
         }
         );
         b2.setFont(new Font("Tahoma", 0, 12));
         panel.add(b2);
-        b2.setBounds(47 + 330, 52 + 2 * y, 70, 20 + y2);
+        b2.setBounds(550, 10 + y + y2, 100, 30);
         
+        c = Color.decode("#C4CAEA");
         
-        b3 = new JButton("Take");
+        sb1 = new JButton("Water");
+        sb1.setBackground(c);
+        sb1.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Water");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb1.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb1);
+        sb1.setBounds(440, 50 + y + y2*2, 100, 30);
+        
+        sb2 = new JButton("Rasberry");
+        sb2.setBackground(c);
+        sb2.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Rasberry");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb2.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb2);
+        sb2.setBounds(550, 50 + y + y2*2, 100, 30);
+        
+        sb3 = new JButton("Alovera");
+        sb3.setBackground(c);
+        sb3.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Alovera");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb3.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb3);
+        sb3.setBounds(440, 90 + y + y2*3, 100, 30);
+        
+        sb4 = new JButton("Mint");
+        sb4.setBackground(c);
+        sb4.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Mint");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb4.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb4);
+        sb4.setBounds(550, 90 + y + y2*3, 100, 30);
+        
+        sb5 = new JButton("Lemon");
+        sb5.setBackground(c);
+        sb5.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Lemon");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb5.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb5);
+        sb5.setBounds(440, 130 + y + y2*4, 100, 30);
+        
+        sb6 = new JButton("Lime");
+        sb6.setBackground(c);
+        sb6.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Lime");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb6.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb6);
+        sb6.setBounds(550, 130 + y + y2*4, 100, 30);
+        
+        sb7 = new JButton("Pink Lemonade");
+        sb7.setBackground(c);
+        sb7.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Pink Lemonade");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb7.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb7);
+        sb7.setBounds(440, 170 + y + y2*5, 100, 30);
+        
+        sb8 = new JButton("Jaljeera");
+        sb8.setBackground(c);
+        sb8.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Jaljeera");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb8.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb8);
+        sb8.setBounds(550, 170 + y + y2*5, 100, 30);
+        
+        sb9 = new JButton("Pineapple");
+        sb9.setBackground(c);
+        sb9.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Pineapple");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb9.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb9);
+        sb9.setBounds(440, 210 + y + y2*6, 100, 30);
+        
+        sb10 = new JButton("Bluo");
+        sb10.setBackground(c);
+        sb10.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Bluo");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb10.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb10);
+        sb10.setBounds(550, 210 + y + y2*6, 100, 30);
+        
+        sb11 = new JButton("Creme");
+        sb11.setBackground(c);
+        sb11.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Creme");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb11.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb11);
+        sb11.setBounds(440, 250 + y + y2*7, 100, 30);
+        
+        sb12 = new JButton("Blueberry");
+        sb12.setBackground(c);
+        sb12.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Blueberry");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb12.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb12);
+        sb12.setBounds(550, 250 + y + y2*7, 100, 30);
+        
+        sb13 = new JButton("Kalakhatta");
+        sb13.setBackground(c);
+        sb13.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Kalakhatta");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb13.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb13);
+        sb13.setBounds(440, 290 + y + y2*8, 100, 30);
+        
+        sb14 = new JButton("Cola");
+        sb14.setBackground(c);
+        sb14.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Cola");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb14.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb14);
+        sb14.setBounds(550, 290 + y + y2*8, 100, 30);
+        
+        sb15 = new JButton("Sweet Corn");
+        sb15.setBackground(c);
+        sb15.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent e) 
+            {
+                if(select >= 1.25)
+                {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        message.setText("-" + Double.toString(amount - 1.25));
+                        result.setText("Sweet Corn");
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(VendingMachine.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        ); 
+        sb15.setFont(new Font("Tahoma", 0, 12));
+        panel.add(sb15);
+        sb15.setBounds(440, 330 + y + y2*9, 100, 30);
+        
+        b3 = new JButton("Select");
         b3.addActionListener(new ActionListener() 
         {
             public void actionPerformed(ActionEvent e) 
             {
-                result.setText("");
-                amount=0;
-                startstate=0.00;
-                change=0.00;
-                select=0.00;
-                freeze=false;
-                message.setText("");
+                if((amount>=1.25)&&(!"".equals(result.getText())))
+                {
+                    result.setText("");
+                    //message.setText("-" + Double.toString(amount - 1.25));
+                    amount=0;
+                    startstate=0.00;
+                    change=0.00;
+                    select=0.00;
+                    freeze=false;
+                    message.setText("");
+                }
+                else
+                {
+                    select = startstate;
+                }
             }
         }
         );
         b3.setFont(new Font("Tahoma", 0, 12));
         panel.add(b3);
-        b3.setBounds(47 + 330, 52 + 4 * y, 70, 20 + y2);
+        b3.setBounds(550, 330 + y + y2*9, 100, 30);
         
-        message = new JTextArea();
-        message.setFont(new Font("Tahoma", 0, 12));
-        message.setEditable(false);
-        panel.add(message);
-        message.setBounds(47 + 280 - 8, 320, 130, 20);
-        
-        result = new JLabel();
+        result = new JTextField();
+        result.setFont(new Font("Tahoma", 0, 20));
+        result.setForeground(Color.BLACK);
         result.setHorizontalAlignment(SwingConstants.CENTER);
-        result.setBounds(47, 320 + 50, 400, 80);
+        result.setBounds(170, 550, 100, 30);
         result.setBackground(Color.white);
-        result.setOpaque(true);
+        result.setEditable(false);
+        //result.setOpaque(true);
         panel.add(result);
     }
     
