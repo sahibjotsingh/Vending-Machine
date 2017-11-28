@@ -556,7 +556,6 @@ public class VendingMachine
         result.setBounds(170, 550, 100, 30);
         result.setBackground(Color.white);
         result.setEditable(false);
-        //result.setOpaque(true);
         panel.add(result);
     }
     
